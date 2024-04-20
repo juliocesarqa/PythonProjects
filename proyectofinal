@@ -1,0 +1,125 @@
+
+Si = True
+No = False
+habitaciones = {
+    'KINP': {"Descripción": "Habitación individual pet friendly", 
+             "precio": 139.00 , 
+             "disponible": Si, 
+             "cantidad": 4},
+    'KING': {"Descripción": "Habitación individual", 
+             "precio": 139.00 , 
+             "disponible": Si,
+             "cantidad": 49},
+    '2QNP': {"Descripción": "Habitación doble pet friendly", 
+             "precio": 129.00 , 
+             "disponible": Si,
+             "cantidad": 8},
+    '2QN': {"Descripción": "Habitación doble", 
+            "precio": 129.00 , 
+            "disponible": Si,
+            "cantidad": 48},
+    'KSTE': {"Descripción": "Suite", 
+             "precio": 239.00 , 
+             "disponible": No,
+             "cantidad": 5}
+    
+        }
+
+print("Bienvenido al sistema de gestión hotelera")
+nombre = input("Indique su nombre: ")
+print("Bienvenido", nombre , "\nSelecciona una opción")
+
+
+print('1. Mostrar habitaciones disponibles') 
+print('2. Agregar nuevo tipo de habitacion')
+print('3. Cambiar precios de habitaciones')
+print('4. Mostrar cantidad de habitaciones') 
+print('5. Reserva de habitación')
+print('6. Salir')
+
+while True:
+    opcion = int(input('Ingrese una opción [1-6] '))
+    while opcion < 0:
+        print('Ingrese nuevamente')
+        opcion = int(input('Ingrese una opción [1-6] '))
+
+    if opcion ==1:
+        print('Habitaciones disponibles:')
+        
+        for codHabitacion, detalles_habitacion in habitaciones.items():
+            if detalles_habitacion["disponible"]:
+                print(f"Habitación {codHabitacion}: Disponible")
+            else:
+                print(f"Habitación {codHabitacion}: No disponible")
+
+    elif opcion==2:
+        cod_habitacion = input("Ingrese el código de habitación: ")
+        des_habitacion = input("Ingrese una descripción: ")
+        precio_habitacion = float(input("Ingrese el precio de la habitación: "))
+        while precio_habitacion < 0:
+            print("Ingrese un precio correcto")
+            precio_habitacion = float(input("Ingrese el precio de la habitación: "))
+
+        disponible_habitacion = input("¿Está disponible la habitación? (Si/No): ")
+        cantidad_habitacion = int(input("Ingrese la cantidad de habitaciones: "))
+        nueva_habitacion = {"Descripción": des_habitacion, 
+                            "precio": precio_habitacion, 
+                            "disponible": disponible_habitacion,
+                            "cantidad":cantidad_habitacion
+                            }
+
+        habitaciones[cod_habitacion] = nueva_habitacion
+        print("Diccionario actualizado de habitaciones:")
+        print(habitaciones)
+
+    elif opcion == 3:
+        tipoHabitacion = input("Ingrese el código de habitación: ")
+
+
+        if tipoHabitacion in habitaciones:
+         habitacion = habitaciones[tipoHabitacion]
+        else:
+            print("La habitación", tipoHabitacion, "no existe en el diccionario.")
+            continue
+                
+        precioNuevo = float(input("Ingrese nuevo precio de habitación: "))
+        while precioNuevo < 0:
+            print("Ingrese un precio correcto")
+            precioNuevo = float(input("Ingrese nuevo precio de habitación: "))
+        habitacion["precio"] = precioNuevo
+        
+        print("Precios actualizados de las habitaciones:")
+
+        for tipoHabitacion, habitacion in habitaciones.items():
+
+            print("la habitación", tipoHabitacion, "tiene el precio de: ", habitacion["precio"] )
+    
+    elif opcion == 4:
+        print("Mostrar cantidad de habitaciones")
+        for habitacion, cant in habitaciones.items():
+            
+            print(habitacion,"tiene", cant["cantidad"],"habitaciones disponibles" )
+
+    elif opcion == 5:
+        print('Reserva de habitación')
+        hab = input("Ingresar el tipo de habitación: ")
+        dias= int(input("Ingrese el n° de días a reservar: "))
+        while dias < 0:
+            print("Número inválido. Ingrese nuevamente")
+            dias= int(input("Ingrese el n° de días a reservar: "))
+
+        if hab in habitaciones:
+            habitacion = habitaciones[hab]
+            precioTotal = habitacion["precio"] * dias
+            print("Habitación:", hab)
+            print("Descripción:", habitacion["Descripción"])
+            print("Precio total:", precioTotal)
+        else:
+            print("El código de habitación ingresado no es válido.")
+    
+    
+    elif opcion==6:
+        print('Adios')
+        break
+
+    
